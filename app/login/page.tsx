@@ -2,31 +2,59 @@
 
 import { Button } from "@heroui/react"
 import { useForm, SubmitHandler } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import z from "zod"
+import { error } from "console"
 
-type Inputs = {
-  username : string
-  password : string
-}
+// type Inputs = {
+//   username : string
+//   password : string
+// }
+
+const loginFormShema  = z.object({
+    username: z.
+        string().min(5, {
+            message:'El nombre de usuario debe ser al menos de 5 caracteres'
+        })
+        .nonempty({
+            message:'El nombre de usuario no puede estar vacio!'
+        }),
+    password:z.
+        string().min(5, {
+            message:'La contrasenia debe ser al menos de 5 caracteres'
+        }).nonempty({
+            message:'La contraseña no puede estar vacia!'
+        }),
+})
+
+type LoginFormType = z.infer<typeof loginFormShema>
 
 export default function Page (){
 
     const {
         register,
         handleSubmit,
-        watch,
+        // watch,
         formState: { errors },
-    } = useForm<Inputs>()
+    } = useForm<LoginFormType>(
+        {
+            resolver:zodResolver(loginFormShema),
+            defaultValues:{
+                username:'admin',
+                password:'admin'
+            }
+        }
+    )
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+    const onSubmit: SubmitHandler<LoginFormType> = (data) => console.log(data)
 
-    console.log(watch("username")) // watch input value by passing the name of it
-    console.log(watch("password"))
+    // console.log(watch("username")) // watch input value by passing the name of it
+    // console.log(watch("password"))
 
     const labelStyle = 'text-sm'
     const inputStyle = 'text-xl border rounded-md p-2'
     const inputAlert = 'text-xs text-red-400'
 
-    const textAlert = 'Este campo es requerido'
 
     return(
         <div className="font-sans w-full h-screen flex items-center justify-center">
@@ -39,14 +67,14 @@ export default function Page (){
                 <label className={labelStyle} htmlFor="username">Usuario</label>
                 <input className={inputStyle} defaultValue="" {...register("username", { required: true })} />
 
-                {errors.username && <span className={inputAlert}>{textAlert}</span>}
+                {errors.username && <span className={inputAlert}>{errors.username.message}</span>}
                 
                 <br/>
 
                 <label className={labelStyle} htmlFor="password">Password</label>
                 <input className={inputStyle} type="password" {...register("password", { required: true })} />
                 
-                {errors.password && <span className={inputAlert}>{textAlert}</span>}
+                {errors.password && <span className={inputAlert}>{errors.password.message}</span>}
                 <br/>
                 <Button className='cursor-pointer' color="primary" type="submit">INICIAR SESION </Button>
                 {/* <input type="submit" /> */}
