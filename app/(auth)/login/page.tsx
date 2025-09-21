@@ -4,7 +4,7 @@ import { Button } from "@heroui/react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
-import { error } from "console"
+// import { error } from "console"
 
 // type Inputs = {
 //   username : string
