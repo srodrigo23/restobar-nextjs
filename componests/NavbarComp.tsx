@@ -23,6 +23,12 @@ const NavbarComp:React.FC<NavbarProps> = ({label}) => {
                     {/* <NavbarItem className="hidden lg:flex">
                         <Link href="#">Login</Link>
                     </NavbarItem> */}
+
+
+
+
+
+                    
                     <NavbarItem>
                         <Button as={Link} color="danger" href="#" variant="flat">
                             Cerrar sesión
