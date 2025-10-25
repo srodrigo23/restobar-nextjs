@@ -17,18 +17,18 @@ const NavbarComp: React.FC<NavbarProps> = ({ label }) => {
       position='static'
       className='bg-black text-white h-20 font-bold text-2xl'
     >
-      <NavbarContent className='hidden sm:flex gap-4' justify='center'>
+      <NavbarContent className='sm:flex gap-4 text-sm' justify='center'>
         {label}
       </NavbarContent>
 
       {pathname === '/waiter' || pathname === '/manager' ? (
         <NavbarContent justify='end'>
-          <NavbarItem className='hidden lg:flex'>
+          {/* <NavbarItem className='lg:flex'>
             <Link href='#'>Login</Link>
-          </NavbarItem>
+          </NavbarItem> */}
           <NavbarItem>
-            <Button as={Link} color='danger' href='#' variant='flat'>
-              Cerrar sesión
+            <Button  className='font-bold' as={Link} size='sm' color='primary' href='#'>
+              NUEVO PEDIDO
             </Button>
           </NavbarItem>
         </NavbarContent>
