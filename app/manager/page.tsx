@@ -4,9 +4,7 @@ interface ManagerPageProps {
  
 const ManagerPage: React.FC<ManagerPageProps> = () => {
     return (
-        <>
-            Manager Page
-        </>
+        <>Manager Page</>
     );
 }
  
