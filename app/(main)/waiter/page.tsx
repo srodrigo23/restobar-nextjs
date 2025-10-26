@@ -9,24 +9,24 @@ interface WaiterPageProps {}
 
 const WaiterPage: React.FC<WaiterPageProps> = () => {
   return (
-    <>
-      <div className='flex flex-row m-4'>
-        <div className='w-1/2'>
-          <ProductsComp />
-        </div>
-        <div className='w-1/2'>
+    <div className='h-[calc(100vh-64px)] w-full flex flex-col gap-2 p-2'>
+      <div className='flex-1 border p-2 overflow-auto'>
+        <ProductsComp />
+      </div>
+      <div className='flex-1 border p-2 flex flex-col'>
+        <div className='flex-1 overflow-auto'>
           <OrderDetail />
-          <div className='flex flex-col gap-2'>
-            <Button variant='solid' color='warning'>
-              REINICIAR
-            </Button>
-            <Button variant='solid' color='success'>
-              CONFIRMAR PEDIDO
-            </Button>
-          </div>
+        </div>
+        <div className='flex flex-col gap-2 mt-4'>
+          <Button variant='solid' color='warning'>
+            REINICIAR
+          </Button>
+          <Button variant='solid' color='success'>
+            CONFIRMAR PEDIDO
+          </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

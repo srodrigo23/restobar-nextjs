@@ -3,7 +3,7 @@ interface OrderDetailProps {
 }
  
 const OrderDetail: React.FC<OrderDetailProps> = () => {
-  return (<div>Order detail</div>);
+  return (<div>Detalle de orden</div>);
 }
  
 export default OrderDetail;
