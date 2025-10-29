@@ -51,6 +51,8 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
     },
   ];
 
+  const saucesData=[]
+
   
   const searchValue = (wingsAm, key:string)=>{
     for(let i=0; i<wingsAm.length; i++){
@@ -94,11 +96,6 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
         sauces.push('Mostaza con miel');
       }
 
-      // let saucesText = ''
-      // if(Array.isArray(sauces) && sauces.length > 0){
-      //   saucesText = sauces.join()
-      // }
-      
       const textualOrder =
         sauces.length === 0
           ? `${textualAmount} de alitas`
@@ -106,8 +103,6 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
       
       setTextualOrder(textualOrder)
     }
-
-
 
     if (sizeSelection === null) {
       setTextualOrder('')
@@ -119,12 +114,13 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
   }, [sizeSelection, isSelectedSpicy, isSelectedBBQ, isSelectedHoneyMustard]);
 
   const buildChickenWingsOrderItem = () => {
-
+    
   }
 
   return (
     <>
-      <ToggleButtonGroup        value={sizeSelection}
+      <ToggleButtonGroup
+        value={sizeSelection}
         exclusive
         onChange={handleSelection}
         aria-label='text alignment'
@@ -183,7 +179,13 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
       </div>
 
       <div>
-        <Button isDisabled={sizeSelection === null} color='secondary'>Agregar</Button>
+        <Button
+          isDisabled={sizeSelection === null}
+          color='secondary'
+          onPress={buildChickenWingsOrderItem}
+        >
+          Agregar
+        </Button>
         <div>{textualOrder}</div>
       </div>
     </>
