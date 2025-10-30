@@ -38,19 +38,19 @@ const WaiterPageContent = () => {
           size='lg'
         >
           <Button
-            color='secondary'
+            color='success'
             size='lg'
             className='font-bold shadow-lg px-6 py-6'
             onPress={() => setIsDrawerOpen(true)}
           >
-            <div className='flex flex-col items-center'>
-              <span className='text-2xl'>🛒</span>
+            <div className='flex items-center '>
+              {/* <span className='text-2xl'>🛒</span> */}
               <span className='text-xs mt-1'>Ver Pedido</span>
-              {getTotalPrice() > 0 && (
+              {/* {getTotalPrice() > 0 && (
                 <span className='text-xs font-bold'>
                   Bs. {getTotalPrice().toFixed(2)}
                 </span>
-              )}
+              )} */}
             </div>
           </Button>
         </Badge>

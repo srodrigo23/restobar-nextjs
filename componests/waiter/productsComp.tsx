@@ -8,31 +8,14 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Checkbox, Button } from '@heroui/react';
 import { IWings } from '@/util/types';
 import { useOrder } from '@/context/OrderContext';
+import {
+  CraftBeerComp,
+  SodasComp,
+  JuicesComp,
+  CocktailsComp,
+} from './drinksComp';
 
 interface ProductsCompProps {}
-
-const products = [
-  {
-    name: 'Alitas',
-    icon: '...',
-  },
-  {
-    name: 'Cerveza Artesanal',
-    icon: '...',
-  },
-  {
-    name: 'Soda',
-    icon: '...',
-  },
-  {
-    name: 'Refresco',
-    icon: '...',
-  },
-  // {
-  //   name: 'Alitas',
-  //   icon: '...',
-  // },
-];
 
 interface ChickenWingsCompProps {}
 
@@ -311,43 +294,45 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
 const ProductsComp: React.FC<ProductsCompProps> = () => {
   return (
     <div className='flex flex-col h-full'>
-      <div className='font-semibold mb-2'>Productos disponibles</div>
+      <div className='font-semibold mb-4 text-xl'>Menú del Restobar</div>
 
-      <Tabs aria-label='Options' className='flex flex-col'>
-        <Tab key='alitas' title='Alitas'>
+      <Tabs aria-label='Menu options' className='flex flex-col' size='lg'>
+        <Tab key='alitas' title='🍗 Alitas'>
           <Card>
             <CardBody>
               <ChickenWingsComp />
             </CardBody>
           </Card>
         </Tab>
-        <Tab key='cerveza' title='Cerveza Artesanal'>
+        <Tab key='cerveza' title='🍺 Cerveza Artesanal'>
           <Card>
-            <CardBody>Cerveza artesanal</CardBody>
+            <CardBody>
+              <CraftBeerComp />
+            </CardBody>
           </Card>
         </Tab>
-        <Tab key='soda' title='Gaseosas'>
+        <Tab key='soda' title='🥤 Gaseosas'>
           <Card>
-            <CardBody>Gaseosas</CardBody>
+            <CardBody>
+              <SodasComp />
+            </CardBody>
           </Card>
         </Tab>
-        <Tab key='juice' title='Jugos'>
+        <Tab key='juice' title='🍹 Jugos'>
           <Card>
-            <CardBody>Jugos y refrescos</CardBody>
+            <CardBody>
+              <JuicesComp />
+            </CardBody>
           </Card>
         </Tab>
-        <Tab key='drinks' title='Bebidas'>
+        <Tab key='drinks' title='🍷 Tragos'>
           <Card>
-            <CardBody>Bebidas</CardBody>
+            <CardBody>
+              <CocktailsComp />
+            </CardBody>
           </Card>
         </Tab>
       </Tabs>
-
-      {/* <ul>
-        {products.map((element, index) => {
-          return <li key={index}>{element.name}</li>;
-        })}
-      </ul> */}
     </div>
   );
 };
