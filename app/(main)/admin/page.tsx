@@ -1,6 +1,6 @@
-interface ManagerPageProps {}
+// interface ManagerPageProps {}
 
-const ManagerPage: React.FC<ManagerPageProps> = () => {
+const ManagerPage = () => {
   return <>Manager Page</>;
 };
 

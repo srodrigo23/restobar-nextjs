@@ -61,7 +61,7 @@ export default function Page (){
 
             <form className="flex flex-col w-2/3 lg:w-1/4 md:w-2/5 shadow-xl mx-10  px-5 py-5 rounded-2xl " onSubmit={handleSubmit(onSubmit)}>
                 
-                <h1 className="text-center font-bold text-xl lg:text-2xl">RESTOBAR <br/>"LA HERMANDAD"</h1>
+                <h1 className="text-center font-bold text-xl lg:text-2xl">RESTOBAR <br/>LA HERMANDAD</h1>
                 <br/>
                 
                 <label className={labelStyle} htmlFor="username">Usuario</label>

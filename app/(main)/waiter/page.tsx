@@ -5,9 +5,10 @@ import ProductsComp from '@/componests/waiter/productsComp';
 
 import { Button } from '@heroui/react';
 
-interface WaiterPageProps {}
+// interface WaiterPageProps {}
 
-const WaiterPage: React.FC<WaiterPageProps> = () => {
+// const WaiterPage: React.FC<WaiterPageProps> = () => {
+const WaiterPage = () => {
   return (
     <div className='h-[calc(100vh-64px)] w-full flex flex-col gap-2 p-2'>
       <div className='flex-1 border p-2 overflow-auto'>

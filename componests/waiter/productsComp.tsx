@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Checkbox, Button } from '@heroui/react';
+import { IWings } from '@/util/types';
 
 interface ProductsCompProps {}
 
@@ -51,15 +52,15 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
     },
   ];
 
-  const saucesData=[]
-
+  // const saucesData=[]
   
-  const searchValue = (wingsAm, key:string)=>{
+  const searchValue = (wingsAm:IWings[], key:string)=>{
     for(let i=0; i<wingsAm.length; i++){
       if(wingsAm[i].id=== key){
         return wingsAm[i].label
       }
     }
+    return ''
   }
 
   const [sizeSelection, setSizeSelection] = useState<string | null>(null);
