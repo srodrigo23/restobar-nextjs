@@ -71,6 +71,7 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
   const [isSelectedSpicy, setIsSelectedSpicy] = useState(false);
   const [isSelectedBBQ, setIsSelectedBBQ] = useState(false);
   const [isSelectedHoneyMustard, setIsSelectedHoneyMustard] = useState(false);
+  const [friesSize, setFriesSize] = useState<string | null>(null);
 
   const handleSelection = (
     event: React.MouseEvent<HTMLElement>,
@@ -79,14 +80,21 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
     setSizeSelection(newSelection);
   };
 
+  const handleFriesSelection = (
+    event: React.MouseEvent<HTMLElement>,
+    newSelection: string | null
+  ) => {
+    setFriesSize(newSelection);
+  };
+
   useEffect(() => {
-    
+
     if (sizeSelection !== null) {
       const textualAmount = searchValue(wingsAmounts, sizeSelection);
       const sauces:string[] = []
 
       setTextualOrder(textualAmount);
-      
+
       if(isSelectedSpicy){
         sauces.push('Picante')
       }
@@ -99,11 +107,18 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
         sauces.push('Mostaza con miel');
       }
 
-      const textualOrder =
+      let textualOrder =
         sauces.length === 0
           ? `${textualAmount} de alitas`
           : `${textualAmount} de alitas con (${sauces.join(', ')})`;
-      
+
+      // Agregar papas al texto si están seleccionadas
+      if (friesSize === 'medium') {
+        textualOrder += ' + Papas medianas';
+      } else if (friesSize === 'large') {
+        textualOrder += ' + Papas grandes';
+      }
+
       setTextualOrder(textualOrder)
     }
 
@@ -112,9 +127,10 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
       setIsSelectedSpicy(false);
       setIsSelectedBBQ(false);
       setIsSelectedHoneyMustard(false);
+      setFriesSize(null);
     }
 
-  }, [sizeSelection, isSelectedSpicy, isSelectedBBQ, isSelectedHoneyMustard]);
+  }, [sizeSelection, isSelectedSpicy, isSelectedBBQ, isSelectedHoneyMustard, friesSize]);
 
   const buildChickenWingsOrderItem = () => {
     if (sizeSelection === null) return;
@@ -124,15 +140,26 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
     if (isSelectedBBQ) sauces.push('Barbacoa');
     if (isSelectedHoneyMustard) sauces.push('Mostaza con miel');
 
+    // Calcular precio base de las alitas
+    let basePrice = sizeSelection === '10-wings' ? 30 : sizeSelection === '15-wings' ? 45 : 60;
+
+    // Agregar precio de las papas si están seleccionadas
+    if (friesSize === 'medium') {
+      basePrice += 10;
+    } else if (friesSize === 'large') {
+      basePrice += 15;
+    }
+
     const newOrderItem = {
       id: `${Date.now()}-${sizeSelection}`,
       productType: 'alitas' as const,
       description: textualOrder,
       quantity: 1,
-      price: sizeSelection === '10-wings' ? 30 : sizeSelection === '15-wings' ? 45 : 60,
+      price: basePrice,
       details: {
         size: sizeSelection,
         sauces: sauces.length > 0 ? sauces : undefined,
+        fries: friesSize || undefined,
       },
     };
 
@@ -143,80 +170,141 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
     setIsSelectedSpicy(false);
     setIsSelectedBBQ(false);
     setIsSelectedHoneyMustard(false);
+    setFriesSize(null);
   }
 
   return (
-    <>
-      <ToggleButtonGroup
-        value={sizeSelection}
-        exclusive
-        onChange={handleSelection}
-        aria-label='text alignment'
-      >
-        {wingsAmounts.map((element, index) => {
-          return (
-            <ToggleButton
-              key={index}
-              value={element.id}
-              aria-label={element.label}
-            >
-              {element.label}
-            </ToggleButton>
-          );
-        })}
-        {/* <ToggleButton value='left' aria-label='left aligned'>
-          10 piezas
-        </ToggleButton>
-        <ToggleButton value='center' aria-label='centered'>
-          12 piezas
-        </ToggleButton>
-        <ToggleButton value='right' aria-label='right aligned'>
-          14 piezas
-        </ToggleButton> */}
+    <div className='space-y-6'>
+      {/* Sección: Tamaño de Alitas */}
+      <div className='bg-gradient-to-r from-orange-50 to-red-50 p-4 rounded-lg border border-orange-200'>
+        <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
+          🍗 Tamaño de Alitas
+        </h3>
+        <ToggleButtonGroup
+          value={sizeSelection}
+          exclusive
+          onChange={handleSelection}
+          aria-label='text alignment'
+          className='w-full'
+        >
+          {wingsAmounts.map((element, index) => {
+            return (
+              <ToggleButton
+                key={index}
+                value={element.id}
+                aria-label={element.label}
+                className='flex-1'
+              >
+                <div className='flex flex-col items-center py-1'>
+                  <span className='font-semibold'>{element.label}</span>
+                  <span className='text-xs text-gray-600'>
+                    Bs. {element.id === '10-wings' ? '30' : element.id === '15-wings' ? '45' : '60'}
+                  </span>
+                </div>
+              </ToggleButton>
+            );
+          })}
+        </ToggleButtonGroup>
+      </div>
 
-        {/* <ToggleButton value='justify' aria-label='justified' disabled>
-          
-        </ToggleButton> */}
-      </ToggleButtonGroup>
-      <div>
-        <div>Salsas</div>
-
-        <div className='flex gap-2'>
+      {/* Sección: Salsas */}
+      <div className='bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border border-yellow-200'>
+        <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
+          🌶️ Salsas
+        </h3>
+        <div className='flex flex-wrap gap-3'>
           <Checkbox
             isDisabled={sizeSelection === null}
             isSelected={isSelectedSpicy}
             onValueChange={setIsSelectedSpicy}
+            color='danger'
           >
-            Picante
+            <span className='font-medium'>🔥 Picante</span>
           </Checkbox>
           <Checkbox
             isDisabled={sizeSelection === null}
             isSelected={isSelectedBBQ}
             onValueChange={setIsSelectedBBQ}
+            color='warning'
           >
-            Barbacoa
+            <span className='font-medium'>🍖 Barbacoa</span>
           </Checkbox>
           <Checkbox
             isDisabled={sizeSelection === null}
             isSelected={isSelectedHoneyMustard}
             onValueChange={setIsSelectedHoneyMustard}
+            color='warning'
           >
-            Mostaza con Miel
+            <span className='font-medium'>🍯 Mostaza con Miel</span>
           </Checkbox>
         </div>
       </div>
 
-      <div>
+      {/* Sección: Papas Fritas */}
+      <div className='bg-gradient-to-r from-yellow-100 to-yellow-50 p-4 rounded-lg border border-yellow-300'>
+        <h3 className='text-lg font-bold text-yellow-800 mb-3 flex items-center gap-2'>
+          🍟 Papas Fritas (Opcional)
+        </h3>
+        <ToggleButtonGroup
+          value={friesSize}
+          exclusive
+          onChange={handleFriesSelection}
+          aria-label='fries size'
+          className='w-full'
+        >
+          <ToggleButton
+            value='medium'
+            aria-label='papas medianas'
+            className='flex-1'
+            disabled={sizeSelection === null}
+          >
+            <div className='flex flex-col items-center py-1'>
+              <span className='font-semibold'>Medianas</span>
+              <span className='text-xs text-gray-600'>+ Bs. 10</span>
+            </div>
+          </ToggleButton>
+          <ToggleButton
+            value='large'
+            aria-label='papas grandes'
+            className='flex-1'
+            disabled={sizeSelection === null}
+          >
+            <div className='flex flex-col items-center py-1'>
+              <span className='font-semibold'>Grandes</span>
+              <span className='text-xs text-gray-600'>+ Bs. 15</span>
+            </div>
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </div>
+
+      {/* Vista Previa del Pedido */}
+      {textualOrder && (
+        <div className='bg-blue-50 p-4 rounded-lg border border-blue-200'>
+          <h4 className='text-sm font-semibold text-blue-800 mb-2'>Vista Previa:</h4>
+          <p className='text-blue-900 font-medium'>{textualOrder}</p>
+          <p className='text-blue-700 text-sm mt-1'>
+            Precio Total: Bs.{' '}
+            {(
+              (sizeSelection === '10-wings' ? 30 : sizeSelection === '15-wings' ? 45 : 60) +
+              (friesSize === 'medium' ? 10 : friesSize === 'large' ? 15 : 0)
+            ).toFixed(2)}
+          </p>
+        </div>
+      )}
+
+      {/* Botón Agregar */}
+      <div className='flex justify-end'>
         <Button
           isDisabled={sizeSelection === null}
           color='secondary'
           onPress={buildChickenWingsOrderItem}
+          size='lg'
+          className='font-bold'
         >
-          Agregar
+          Agregar al Pedido
         </Button>
-        <div>{textualOrder}</div>
       </div>
-    </>
+    </div>
   );
 };
 

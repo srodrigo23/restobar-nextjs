@@ -12,5 +12,6 @@ export interface IOrderItem {
   details?: {
     size?: string;
     sauces?: string[];
+    fries?: string;
   };
 } 
