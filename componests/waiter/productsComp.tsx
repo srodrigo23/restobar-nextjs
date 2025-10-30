@@ -7,6 +7,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Checkbox, Button } from '@heroui/react';
 import { IWings } from '@/util/types';
+import { useOrder } from '@/context/OrderContext';
 
 interface ProductsCompProps {}
 
@@ -36,6 +37,7 @@ const products = [
 interface ChickenWingsCompProps {}
 
 const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
+  const { addOrderItem } = useOrder();
 
   const wingsAmounts = [
     {
@@ -115,7 +117,32 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
   }, [sizeSelection, isSelectedSpicy, isSelectedBBQ, isSelectedHoneyMustard]);
 
   const buildChickenWingsOrderItem = () => {
-    
+    if (sizeSelection === null) return;
+
+    const sauces: string[] = [];
+    if (isSelectedSpicy) sauces.push('Picante');
+    if (isSelectedBBQ) sauces.push('Barbacoa');
+    if (isSelectedHoneyMustard) sauces.push('Mostaza con miel');
+
+    const newOrderItem = {
+      id: `${Date.now()}-${sizeSelection}`,
+      productType: 'alitas' as const,
+      description: textualOrder,
+      quantity: 1,
+      price: sizeSelection === '10-wings' ? 30 : sizeSelection === '15-wings' ? 45 : 60,
+      details: {
+        size: sizeSelection,
+        sauces: sauces.length > 0 ? sauces : undefined,
+      },
+    };
+
+    addOrderItem(newOrderItem);
+
+    // Reiniciar selección después de agregar
+    setSizeSelection(null);
+    setIsSelectedSpicy(false);
+    setIsSelectedBBQ(false);
+    setIsSelectedHoneyMustard(false);
   }
 
   return (
