@@ -1,13 +1,14 @@
 'use client';
 
-import OrderDetail from '@/componests/waiter/orderDetailComp';
 import ProductsComp from '@/componests/waiter/productsComp';
+import OrderDrawer from '@/componests/waiter/orderDrawer';
 import { OrderProvider, useOrder } from '@/context/OrderContext';
-
-import { Button } from '@heroui/react';
+import { Button, Badge } from '@heroui/react';
+import { useState } from 'react';
 
 const WaiterPageContent = () => {
-  const { clearOrder } = useOrder();
+  const { clearOrder, orderItems, getTotalPrice } = useOrder();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleReset = () => {
     clearOrder();
@@ -16,27 +17,53 @@ const WaiterPageContent = () => {
   const handleConfirmOrder = () => {
     // Lógica para confirmar el pedido
     console.log('Pedido confirmado');
+    // Aquí podrías enviar el pedido al backend
   };
 
+  const totalItems = orderItems.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
-    <div className='h-[calc(100vh-64px)] w-full flex flex-col gap-2 p-2'>
-      <div className='flex-1 border p-2 overflow-auto'>
+    <>
+      <div className='h-[calc(100vh-64px)] w-full p-2 overflow-auto pb-24'>
         <ProductsComp />
       </div>
-      <div className='flex-1 border p-2 flex flex-col'>
-        <div className='flex-1 overflow-auto'>
-          <OrderDetail />
-        </div>
-        <div className='flex flex-col gap-2 mt-4'>
-          <Button variant='solid' color='warning' onPress={handleReset}>
-            REINICIAR
+
+      {/* Botón flotante para ver el pedido */}
+      <div className='fixed bottom-4 right-4 z-50'>
+        <Badge
+          content={totalItems}
+          color='danger'
+          isInvisible={totalItems === 0}
+          showOutline={false}
+          size='lg'
+        >
+          <Button
+            color='secondary'
+            size='lg'
+            className='font-bold shadow-lg px-6 py-6'
+            onPress={() => setIsDrawerOpen(true)}
+          >
+            <div className='flex flex-col items-center'>
+              <span className='text-2xl'>🛒</span>
+              <span className='text-xs mt-1'>Ver Pedido</span>
+              {getTotalPrice() > 0 && (
+                <span className='text-xs font-bold'>
+                  Bs. {getTotalPrice().toFixed(2)}
+                </span>
+              )}
+            </div>
           </Button>
-          <Button variant='solid' color='success' onPress={handleConfirmOrder}>
-            CONFIRMAR PEDIDO
-          </Button>
-        </div>
+        </Badge>
       </div>
-    </div>
+
+      {/* Drawer/Modal del pedido */}
+      <OrderDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        onConfirmOrder={handleConfirmOrder}
+        onResetOrder={handleReset}
+      />
+    </>
   );
 };
 
