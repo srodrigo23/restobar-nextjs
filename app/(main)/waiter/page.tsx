@@ -7,7 +7,12 @@ import { Button, Badge } from '@heroui/react';
 import { useState } from 'react';
 
 const WaiterPageContent = () => {
-  const { clearOrder, orderItems, getTotalPrice } = useOrder();
+  const { 
+    clearOrder, 
+    orderItems, 
+    // getTotalPrice 
+  } = useOrder();
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleReset = () => {
