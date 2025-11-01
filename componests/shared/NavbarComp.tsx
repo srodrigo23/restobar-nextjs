@@ -27,9 +27,9 @@ const NavbarComp: React.FC<NavbarProps> = ({ label }) => {
             <Link href='#'>Login</Link>
           </NavbarItem> */}
           <NavbarItem>
-            <Button  className='font-bold' as={Link} size='sm' color='primary' href='#'>
+            {/* <Button  className='font-bold' as={Link} size='sm' color='primary' href='#'>
               NUEVO PEDIDO
-            </Button>
+            </Button> */}
           </NavbarItem>
         </NavbarContent>
       ) : (

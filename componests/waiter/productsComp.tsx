@@ -8,14 +8,10 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Checkbox, Button } from '@heroui/react';
 import { IWings } from '@/util/types';
 import { useOrder } from '@/context/OrderContext';
-import {
-  CraftBeerComp,
-  SodasComp,
-  JuicesComp,
-  CocktailsComp,
-} from './drinksComp';
 
-interface ProductsCompProps {}
+import { CraftBeerComp } from './order/craftBeerComp';
+
+
 
 interface ChickenWingsCompProps {}
 
@@ -24,21 +20,27 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
 
   const wingsAmounts = [
     {
+      id: '4-wings',
+      label: '4 piezas',
+      price: 18
+    },
+    {
+      id: '6-wings',
+      label: '6 piezas',
+      price: 25
+    },
+    {
       id: '10-wings',
       label: '10 piezas',
+      price: 38
     },
     {
       id: '15-wings',
       label: '15 piezas',
-    },
-    {
-      id: '20-wings',
-      label: '20 piezas',
+      price: 55
     },
   ];
 
-  // const saucesData=[]
-  
   const searchValue = (wingsAm:IWings[], key:string)=>{
     for(let i=0; i<wingsAm.length; i++){
       if(wingsAm[i].id=== key){
@@ -51,10 +53,48 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
   const [sizeSelection, setSizeSelection] = useState<string | null>(null);
   const [textualOrder, setTextualOrder] = useState<string>('');
 
-  const [isSelectedSpicy, setIsSelectedSpicy] = useState(false);
   const [isSelectedBBQ, setIsSelectedBBQ] = useState(false);
+  const [isSelectedSpicy, setIsSelectedSpicy] = useState(false);
   const [isSelectedHoneyMustard, setIsSelectedHoneyMustard] = useState(false);
+
   const [friesSize, setFriesSize] = useState<string | null>(null);
+
+  const saucesData = [
+    {
+      id: 'bbq',
+      label: 'Barbacoa',
+      icon: '🍖',
+      stateSelected: isSelectedBBQ,
+      onChangeMethod: setIsSelectedBBQ,
+    },
+    {
+      id: 'spicy',
+      label: 'Picante',
+      icon: '🔥',
+      stateSelected: isSelectedSpicy,
+      onChangeMethod: setIsSelectedSpicy,
+    },
+    {
+      id: 'bbq',
+      label: 'Miel y mostaza',
+      icon: '🍯',
+      stateSelected: isSelectedHoneyMustard,
+      onChangeMethod: setIsSelectedHoneyMustard,
+    },
+  ];
+
+  const frenchFries = [
+    {
+      id: 'tam1',
+      label: 'Porción 1',
+      price: 7,
+    },
+    {
+      id: 'tam2',
+      label: 'Porción 2',
+      price: 12,
+    },
+  ];
 
   const handleSelection = (
     event: React.MouseEvent<HTMLElement>,
@@ -161,7 +201,7 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
       {/* Sección: Tamaño de Alitas */}
       <div className='bg-gradient-to-r from-orange-50 to-red-50 p-4 rounded-lg border border-orange-200'>
         <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
-          🍗 Tamaño de Alitas
+          🍗 Cantidad
         </h3>
         <ToggleButtonGroup
           value={sizeSelection}
@@ -181,7 +221,7 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
                 <div className='flex flex-col items-center py-1'>
                   <span className='font-semibold'>{element.label}</span>
                   <span className='text-xs text-gray-600'>
-                    Bs. {element.id === '10-wings' ? '30' : element.id === '15-wings' ? '45' : '60'}
+                    Bs.- {element.price}
                   </span>
                 </div>
               </ToggleButton>
@@ -190,85 +230,82 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
         </ToggleButtonGroup>
       </div>
 
-      {/* Sección: Salsas */}
-      <div className='bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border border-yellow-200'>
-        <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
-          🌶️ Salsas
-        </h3>
-        <div className='flex flex-wrap gap-3'>
-          <Checkbox
-            isDisabled={sizeSelection === null}
-            isSelected={isSelectedSpicy}
-            onValueChange={setIsSelectedSpicy}
-            color='danger'
-          >
-            <span className='font-medium'>🔥 Picante</span>
-          </Checkbox>
-          <Checkbox
-            isDisabled={sizeSelection === null}
-            isSelected={isSelectedBBQ}
-            onValueChange={setIsSelectedBBQ}
-            color='warning'
-          >
-            <span className='font-medium'>🍖 Barbacoa</span>
-          </Checkbox>
-          <Checkbox
-            isDisabled={sizeSelection === null}
-            isSelected={isSelectedHoneyMustard}
-            onValueChange={setIsSelectedHoneyMustard}
-            color='warning'
-          >
-            <span className='font-medium'>🍯 Mostaza con Miel</span>
-          </Checkbox>
+      {/* Sección: Salsas y Papas en grid de 2 columnas */}
+      <div className='grid grid-cols-2 md:grid-cols-2 gap-4'>
+        {/* Sección: Salsas */}
+        <div className='bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border border-yellow-200'>
+          <h3 className=' font-bold text-orange-800 mb-3 flex items-center gap-2'>
+            🌶️ Salsas
+          </h3>
+          <div className='flex flex-wrap gap-3'>
+            {saucesData.map((element, index) => {
+              return (
+                <Checkbox
+                  isDisabled={sizeSelection === null}
+                  isSelected={element.stateSelected}
+                  onValueChange={element.onChangeMethod}
+                  // color='danger'
+                >
+                  <span className='font-medium'>
+                    {element.icon} {element.label}
+                  </span>
+                </Checkbox>
+              );
+            })}
+          </div>
         </div>
-      </div>
 
-      {/* Sección: Papas Fritas */}
-      <div className='bg-gradient-to-r from-yellow-100 to-yellow-50 p-4 rounded-lg border border-yellow-300'>
-        <h3 className='text-lg font-bold text-yellow-800 mb-3 flex items-center gap-2'>
-          🍟 Papas Fritas (Opcional)
-        </h3>
-        <ToggleButtonGroup
-          value={friesSize}
-          exclusive
-          onChange={handleFriesSelection}
-          aria-label='fries size'
-          className='w-full'
-        >
-          <ToggleButton
-            value='medium'
-            aria-label='papas medianas'
-            className='flex-1'
-            disabled={sizeSelection === null}
+        {/* Sección: Papas Fritas */}
+        <div className='bg-gradient-to-r from-yellow-100 to-yellow-50 p-4 rounded-lg border border-yellow-300'>
+          <h3 className='font-bold text-yellow-800 mb-3 flex items-center gap-2'>
+            🍟 (+) Papas
+          </h3>
+          <ToggleButtonGroup
+            value={friesSize}
+            orientation='vertical'
+            size='small'
+            exclusive
+            onChange={handleFriesSelection}
+            aria-label='fries size'
+            className='w-full'
           >
-            <div className='flex flex-col items-center py-1'>
-              <span className='font-semibold'>Medianas</span>
-              <span className='text-xs text-gray-600'>+ Bs. 10</span>
-            </div>
-          </ToggleButton>
-          <ToggleButton
-            value='large'
-            aria-label='papas grandes'
-            className='flex-1'
-            disabled={sizeSelection === null}
-          >
-            <div className='flex flex-col items-center py-1'>
-              <span className='font-semibold'>Grandes</span>
-              <span className='text-xs text-gray-600'>+ Bs. 15</span>
-            </div>
-          </ToggleButton>
-        </ToggleButtonGroup>
+            {
+              frenchFries.map((element, index)=>{
+               return ( 
+                <ToggleButton
+                  key={index}
+                  value={element.id}
+                  // aria-label='papas medianas'
+                  className='flex-1'
+                  disabled={sizeSelection === null}
+                >
+                  <div className='flex flex-col items-center py-1'>
+                    <span className='font-semibold'>{element.label}</span>
+                    <span className='text-xs text-gray-600'>+ Bs. {element.price}</span>
+                  </div>
+                </ToggleButton>
+               ); 
+              })
+            }
+          </ToggleButtonGroup>
+        </div>
       </div>
 
       {/* Vista Previa del Pedido */}
       {textualOrder && (
         <div className='bg-blue-50 p-4 rounded-lg border border-blue-200'>
-          <h4 className='text-sm font-semibold text-blue-800 mb-2'>Vista Previa:</h4>
+          <h4 className='text-sm font-semibold text-blue-800 mb-2'>
+            Vista Previa:
+          </h4>
           <p className='text-blue-900 font-medium'>{textualOrder}</p>
           <p className='text-blue-700 text-sm mt-1'>
             Precio Total: Bs.{' '}
             {(
-              (sizeSelection === '10-wings' ? 30 : sizeSelection === '15-wings' ? 45 : 60) +
+              (sizeSelection === '10-wings'
+                ? 30
+                : sizeSelection === '15-wings'
+                ? 45
+                : 60) +
               (friesSize === 'medium' ? 10 : friesSize === 'large' ? 15 : 0)
             ).toFixed(2)}
           </p>
@@ -291,6 +328,8 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
   );
 };
 
+interface ProductsCompProps {}
+
 const ProductsComp: React.FC<ProductsCompProps> = () => {
   return (
     <div className='flex flex-col h-full'>
@@ -311,7 +350,7 @@ const ProductsComp: React.FC<ProductsCompProps> = () => {
             </CardBody>
           </Card>
         </Tab>
-        <Tab key='soda' title='🥤 Gaseosas'>
+        {/* <Tab key='soda' title='🥤 Gaseosas'>
           <Card>
             <CardBody>
               <SodasComp />
@@ -331,7 +370,7 @@ const ProductsComp: React.FC<ProductsCompProps> = () => {
               <CocktailsComp />
             </CardBody>
           </Card>
-        </Tab>
+        </Tab> */}
       </Tabs>
     </div>
   );
