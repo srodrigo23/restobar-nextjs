@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} h-screen`}
       >
         <ProvidersHeroUI>
-          <NavbarComp label={"La hermandad - Restobar"}/>
+          <NavbarComp label={"La Hermandad"}/>
           {children}
         </ProvidersHeroUI>
       </body>

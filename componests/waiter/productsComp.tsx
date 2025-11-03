@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { Checkbox, Button } from '@heroui/react';
+import { Checkbox, Button, Badge } from '@heroui/react'; 
 import { IWings } from '@/util/types';
 import { useOrder } from '@/context/OrderContext';
 
@@ -333,7 +333,33 @@ interface ProductsCompProps {}
 const ProductsComp: React.FC<ProductsCompProps> = () => {
   return (
     <div className='flex flex-col h-full'>
-      <div className='font-semibold mb-4 text-xl text-center'>MENÚ</div>
+      <div className='flex gap-2.5 justify-between m-3'>
+        <div className='font-semibold text-2xl text-center'>NUEVO PEDIDO</div>
+        <Badge
+          // content={totalItems}
+          color='danger'
+          // isInvisible={totalItems === 0}
+          showOutline={false}
+          size='lg'
+        >
+          <Button
+            color='success'
+            size='sm'
+            className='font-semibold'
+            // onPress={() => setIsDrawerOpen(true)}
+          >
+            <div className='flex items-center '>
+              {/* <span className='text-2xl'>🛒</span> */}
+              <span className='text-xs mt-1'>Ver Pedido</span>
+              {/* {getTotalPrice() > 0 && (
+                <span className='text-xs font-bold'>
+                  Bs. {getTotalPrice().toFixed(2)}
+                </span>
+              )} */}
+            </div>
+          </Button>
+        </Badge>
+      </div>
 
       <Tabs aria-label='Menu options' className='flex flex-col' size='lg'>
         <Tab key='alitas' title='🍗 Alitas'>
