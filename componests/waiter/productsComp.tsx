@@ -11,6 +11,8 @@ import { useOrder } from '@/context/OrderContext';
 
 import { CraftBeerComp } from './order/craftBeerComp';
 
+import { SoftDriknsComp, JuicesComp, CocktailsComp } from './softDrinksComp';
+
 interface ChickenWingsCompProps {}
 
 const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
@@ -376,27 +378,27 @@ const ProductsComp: React.FC<ProductsCompProps> = () => {
             </CardBody>
           </Card>
         </Tab>
-        {/* <Tab key='soda' title='🥤 Gaseosas'>
+        <Tab key='soda' title='🥤 Refrescos'>
           <Card>
             <CardBody>
-              <SodasComp />
+              <SoftDriknsComp />
             </CardBody>
           </Card>
         </Tab>
-        <Tab key='juice' title='🍹 Jugos'>
+        {/* <Tab key='juice' title='🍹 Jugos'>
           <Card>
             <CardBody>
               <JuicesComp />
             </CardBody>
           </Card>
-        </Tab>
+        </Tab> */}
         <Tab key='drinks' title='🍷 Tragos'>
           <Card>
             <CardBody>
               <CocktailsComp />
             </CardBody>
           </Card>
-        </Tab> */}
+        </Tab>
       </Tabs>
     </div>
   );

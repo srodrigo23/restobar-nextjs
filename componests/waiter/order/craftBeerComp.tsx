@@ -57,6 +57,24 @@ export const CraftBeerComp: React.FC<CraftBeerCompProps> = () => {
     },
   ];
 
+  const bottleBeer = [
+    {
+      id: 'corona',
+      label: 'Corona',
+      price: 20,
+    },
+    {
+      id: 'huari',
+      label: 'Huari',
+      price: 25,
+    },
+    {
+      id: 'corona-sixpack',
+      label: 'Six Pack (Corona)',
+      price: 100,
+    },
+  ];
+
   const handleSizeChange = (
     event: React.MouseEvent<HTMLElement>,
     newSize: string | null
@@ -93,7 +111,7 @@ export const CraftBeerComp: React.FC<CraftBeerCompProps> = () => {
 
   return (
     <div className='space-y-2'>
-      <div 
+      <div
       // className='bg-gradient-to-r from-amber-50 to-yellow-50 p-2 rounded-lg border border-amber-200'
       >
         <h3 className='text-lg font-bold text-amber-800 mb-1 flex items-center gap-2'>
@@ -111,7 +129,7 @@ export const CraftBeerComp: React.FC<CraftBeerCompProps> = () => {
               >
                 {beerTypes.map((beer) => (
                   <Radio key={beer.id} value={beer.id} className='p-2'>
-                    <span className='font-medium'>
+                    <span className='text-xl'>
                       {beer.icon} {beer.label}
                     </span>
                   </Radio>
@@ -120,7 +138,7 @@ export const CraftBeerComp: React.FC<CraftBeerCompProps> = () => {
             </RadioGroup>
           </div>
           {/* Tamaño */}
-          <div 
+          <div
           // className='bg-gradient-to-r from-yellow-50 to-amber-50 p-4 rounded-lg border border-yellow-200'
           >
             {/* <h3 className='text-lg font-bold text-amber-800 mb-3'>Tamaño</h3> */}
@@ -149,6 +167,32 @@ export const CraftBeerComp: React.FC<CraftBeerCompProps> = () => {
                 );
               })}
             </ToggleButtonGroup>
+          </div>
+        </div>
+      </div>
+
+      <div
+      // className='bg-gradient-to-r from-amber-50 to-yellow-50 p-2 rounded-lg border border-amber-200'
+      >
+        <h3 className='text-lg font-bold text-amber-800 mb-1 flex items-center gap-2'>
+          🍺 Botella
+        </h3>
+        <div className='flex flex-col gap-2 '>
+          <div className='p-4 rounded-lg border border-yellow-200'>
+            <RadioGroup value={beerType} onValueChange={setBeerType}>
+              <div className='flex flex-col gap-2 justify-center'>
+                {bottleBeer.map((beer) => (
+                  <Radio key={beer.id} value={beer.id}>
+                    <div className='flex items-center w-full gap-1.5'>
+                      <span className='text-xl'>{beer.label}</span>
+                      <span className='text-xs text-gray-400'>
+                        Bs.- {beer.price}
+                      </span>
+                    </div>
+                  </Radio>
+                ))}
+              </div>
+            </RadioGroup>
           </div>
         </div>
       </div>
