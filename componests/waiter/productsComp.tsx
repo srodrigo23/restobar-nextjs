@@ -10,8 +10,8 @@ import { IWings } from '@/util/types';
 import { useOrder } from '@/context/OrderContext';
 
 import { CraftBeerComp } from './order/craftBeerComp';
-
-import { SoftDriknsComp, JuicesComp, CocktailsComp } from './softDrinksComp';
+import { DrinksComp } from './order/drinksComp';
+import { SoftDriknsComp } from './softDrinksComp';
 
 interface ChickenWingsCompProps {}
 
@@ -385,17 +385,10 @@ const ProductsComp: React.FC<ProductsCompProps> = () => {
             </CardBody>
           </Card>
         </Tab>
-        {/* <Tab key='juice' title='🍹 Jugos'>
-          <Card>
-            <CardBody>
-              <JuicesComp />
-            </CardBody>
-          </Card>
-        </Tab> */}
         <Tab key='drinks' title='🍷 Tragos'>
           <Card>
             <CardBody>
-              <CocktailsComp />
+              <DrinksComp />
             </CardBody>
           </Card>
         </Tab>

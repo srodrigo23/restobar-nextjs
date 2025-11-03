@@ -34,7 +34,7 @@ const WaiterPageContent = () => {
       </div>
 
       {/* Botón flotante para ver el pedido */}
-      <div className='fixed bottom-4 right-4 z-50'>
+      {/* <div className='fixed bottom-4 right-4 z-50'>
         <Badge
           content={totalItems}
           color='danger'
@@ -49,17 +49,17 @@ const WaiterPageContent = () => {
             onPress={() => setIsDrawerOpen(true)}
           >
             <div className='flex items-center '>
-              {/* <span className='text-2xl'>🛒</span> */}
+              <span className='text-2xl'>🛒</span>
               <span className='text-xs mt-1'>Ver Pedido</span>
-              {/* {getTotalPrice() > 0 && (
+              {getTotalPrice() > 0 && (
                 <span className='text-xs font-bold'>
                   Bs. {getTotalPrice().toFixed(2)}
                 </span>
-              )} */}
+              )}
             </div>
           </Button>
         </Badge>
-      </div>
+      </div> */}
 
       {/* Drawer/Modal del pedido */}
       <OrderDrawer
