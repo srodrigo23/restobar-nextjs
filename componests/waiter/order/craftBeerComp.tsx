@@ -17,10 +17,44 @@ export const CraftBeerComp: React.FC<CraftBeerCompProps> = () => {
   const [beerType, setBeerType] = useState<string>('');
 
   const beerTypes = [
-    { id: 'ipa', label: 'IPA'},
-    { id: 'lager', label: 'Lager'},
-    { id: 'stout', label: 'Stout'},
-    { id: 'ale', label: 'Ale'},
+    {
+      id: 'miel',
+      label: 'Miel',
+      icon: '🍯',
+    },
+    {
+      id: 'rubia',
+      label: 'Rubia',
+      icon: '👱🏻‍♀️',
+    },
+    {
+      id: 'negra',
+      label: 'Negra',
+      icon: '⚫️',
+    },
+    {
+      id: 'roja',
+      label: 'Roja',
+      icon: '🔴',
+    },
+  ];
+
+  const beerSizes = [
+    {
+      id: 'mid-chop',
+      price: 15,
+      label: 'Chop Mediano',
+    },
+    {
+      id: 'big-chop',
+      price: 25,
+      label: 'Chop Grande',
+    },
+    {
+      id: 'beer-mug',
+      price: 45,
+      label: 'Jarra',
+    },
   ];
 
   const handleSizeChange = (
@@ -50,57 +84,73 @@ export const CraftBeerComp: React.FC<CraftBeerCompProps> = () => {
 
     addOrderItem(newOrderItem);
 
-    // Reiniciar selección
     setBeerSize(null);
     setBeerType('');
   };
 
   const isValid = beerSize !== null && beerType !== '';
-  const currentPrice =
-    beerSize === 'medium' ? 25 : beerSize === 'large' ? 35 : 0;
+  const currentPrice = beerSize === 'medium' ? 25 : beerSize === 'large' ? 35 : 0;
 
   return (
-    <div className='space-y-6'>
-      {/* Tipo de Cerveza */}
-      <div className='bg-gradient-to-r from-amber-50 to-yellow-50 p-4 rounded-lg border border-amber-200'>
-        <h3 className='text-lg font-bold text-amber-800 mb-3 flex items-center gap-2'>
-          🍺 Cerveza Artesanal
+    <div className='space-y-2'>
+      <div 
+      // className='bg-gradient-to-r from-amber-50 to-yellow-50 p-2 rounded-lg border border-amber-200'
+      >
+        <h3 className='text-lg font-bold text-amber-800 mb-1 flex items-center gap-2'>
+          🍺 Artesanal
         </h3>
-        <RadioGroup value={beerType} onValueChange={setBeerType}>
-          <div className='grid grid-cols-2 gap-3'>
-            {beerTypes.map((beer) => (
-              <Radio key={beer.id} value={beer.id} className='p-2'>
-                <span className='font-medium'>
-                  {beer.label}
-                </span>
-              </Radio>
-            ))}
+        <div className='flex flex-col gap-2 '>
+          <div className='p-4 rounded-lg border border-yellow-200'>
+            {/* <h3 className='text-lg font-bold text-amber-800 mb-3 flex items-center gap-2'>
+              Disponibles
+            </h3> */}
+            <RadioGroup value={beerType} onValueChange={setBeerType}>
+              <div
+                className='flex gap-2 justify-center'
+                // className='grid grid-cols-1 gap-3'
+              >
+                {beerTypes.map((beer) => (
+                  <Radio key={beer.id} value={beer.id} className='p-2'>
+                    <span className='font-medium'>
+                      {beer.icon} {beer.label}
+                    </span>
+                  </Radio>
+                ))}
+              </div>
+            </RadioGroup>
           </div>
-        </RadioGroup>
-      </div>
-
-      {/* Tamaño */}
-      <div className='bg-gradient-to-r from-yellow-50 to-amber-50 p-4 rounded-lg border border-yellow-200'>
-        <h3 className='text-lg font-bold text-amber-800 mb-3'>Tamaño</h3>
-        <ToggleButtonGroup
-          value={beerSize}
-          exclusive
-          onChange={handleSizeChange}
-          className='w-full'
-        >
-          <ToggleButton value='medium' className='flex-1'>
-            <div className='flex flex-col items-center py-1'>
-              <span className='font-semibold'>Mediano</span>
-              <span className='text-xs text-gray-600'>Bs. 25</span>
-            </div>
-          </ToggleButton>
-          <ToggleButton value='large' className='flex-1'>
-            <div className='flex flex-col items-center py-1'>
-              <span className='font-semibold'>Grande</span>
-              <span className='text-xs text-gray-600'>Bs. 35</span>
-            </div>
-          </ToggleButton>
-        </ToggleButtonGroup>
+          {/* Tamaño */}
+          <div 
+          // className='bg-gradient-to-r from-yellow-50 to-amber-50 p-4 rounded-lg border border-yellow-200'
+          >
+            {/* <h3 className='text-lg font-bold text-amber-800 mb-3'>Tamaño</h3> */}
+            <ToggleButtonGroup
+              value={beerSize}
+              // orientation='vertical'
+              exclusive
+              onChange={handleSizeChange}
+              size='small'
+              className='w-full'
+            >
+              {beerSizes.map((element, index) => {
+                return (
+                  <ToggleButton
+                    key={index}
+                    value={element.id}
+                    className='flex-1'
+                  >
+                    <div className='flex flex-col items-center py-1'>
+                      <span className='font-semibold'>{element.label}</span>
+                      <span className='text-xs text-gray-600'>
+                        Bs. {element.price}
+                      </span>
+                    </div>
+                  </ToggleButton>
+                );
+              })}
+            </ToggleButtonGroup>
+          </div>
+        </div>
       </div>
 
       {/* Vista Previa */}
@@ -125,7 +175,7 @@ export const CraftBeerComp: React.FC<CraftBeerCompProps> = () => {
           isDisabled={!isValid}
           color='secondary'
           onPress={addBeerToOrder}
-          size='lg'
+          size='md'
           className='font-bold'
         >
           Agregar al Pedido

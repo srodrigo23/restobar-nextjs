@@ -11,8 +11,6 @@ import { useOrder } from '@/context/OrderContext';
 
 import { CraftBeerComp } from './order/craftBeerComp';
 
-
-
 interface ChickenWingsCompProps {}
 
 const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
@@ -96,7 +94,7 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
     },
   ];
 
-  const handleSelection = (
+  const handleWingsSelection = (
     event: React.MouseEvent<HTMLElement>,
     newSelection: string | null
   ) => {
@@ -197,16 +195,18 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
   }
 
   return (
-    <div className='space-y-6'>
+    <div className='space-y-2'>
       {/* Sección: Tamaño de Alitas */}
-      <div className='bg-gradient-to-r from-orange-50 to-red-50 p-4 rounded-lg border border-orange-200'>
-        <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
+      <div 
+        // className='bg-gradient-to-r from-orange-50 to-red-50 p-4 rounded-lg border border-orange-200'
+      >
+        {/* <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
           🍗 Cantidad
-        </h3>
+        </h3> */}
         <ToggleButtonGroup
           value={sizeSelection}
           exclusive
-          onChange={handleSelection}
+          onChange={handleWingsSelection}
           aria-label='text alignment'
           className='w-full'
         >
@@ -231,9 +231,9 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
       </div>
 
       {/* Sección: Salsas y Papas en grid de 2 columnas */}
-      <div className='grid grid-cols-2 md:grid-cols-2 gap-4'>
+      <div className='grid grid-cols-2 md:grid-cols-2 gap-2'>
         {/* Sección: Salsas */}
-        <div className='bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border border-yellow-200'>
+        <div className='bg-gradient-to-r from-yellow-50 to-orange-50 p-2 rounded-lg border border-yellow-200'>
           <h3 className=' font-bold text-orange-800 mb-3 flex items-center gap-2'>
             🌶️ Salsas
           </h3>
@@ -256,7 +256,7 @@ const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
         </div>
 
         {/* Sección: Papas Fritas */}
-        <div className='bg-gradient-to-r from-yellow-100 to-yellow-50 p-4 rounded-lg border border-yellow-300'>
+        <div className='bg-gradient-to-r from-yellow-100 to-yellow-50 p-2 rounded-lg border border-yellow-300'>
           <h3 className='font-bold text-yellow-800 mb-3 flex items-center gap-2'>
             🍟 (+) Papas
           </h3>
@@ -333,7 +333,7 @@ interface ProductsCompProps {}
 const ProductsComp: React.FC<ProductsCompProps> = () => {
   return (
     <div className='flex flex-col h-full'>
-      <div className='font-semibold mb-4 text-xl'>Menú del Restobar</div>
+      <div className='font-semibold mb-4 text-xl text-center'>MENÚ</div>
 
       <Tabs aria-label='Menu options' className='flex flex-col' size='lg'>
         <Tab key='alitas' title='🍗 Alitas'>
@@ -343,7 +343,7 @@ const ProductsComp: React.FC<ProductsCompProps> = () => {
             </CardBody>
           </Card>
         </Tab>
-        <Tab key='cerveza' title='🍺 Cerveza Artesanal'>
+        <Tab key='cerveza' title='🍺 Cerveza'>
           <Card>
             <CardBody>
               <CraftBeerComp />
