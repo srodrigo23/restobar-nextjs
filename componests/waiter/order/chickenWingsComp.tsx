@@ -34,12 +34,14 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
   ];
 
   const searchValue = (wingsAm: IWings[], key: string) => {
-    for (let i = 0; i < wingsAm.length; i++) {
-      if (wingsAm[i].id === key) {
-        return wingsAm[i].label;
-      }
-    }
-    return '';
+
+    return wingsAm.filter((el)=> el.id === key)
+    // for (let i = 0; i < wingsAm.length; i++) {
+    //   if (wingsAm[i].id === key) {
+    //     return wingsAm[i];
+    //   }
+    // }
+    return null;
   };
 
   const [sizeSelection, setSizeSelection] = useState<string | null>(null);
@@ -48,8 +50,10 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
   const [isSelectedBBQ, setIsSelectedBBQ] = useState(false);
   const [isSelectedSpicy, setIsSelectedSpicy] = useState(false);
   const [isSelectedHoneyMustard, setIsSelectedHoneyMustard] = useState(false);
-
+  
   const [friesSize, setFriesSize] = useState<string | null>(null);
+
+  const [price, setPrice] = useState<number>(0);
 
   const saucesData = [
     {
@@ -104,10 +108,20 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
 
   useEffect(() => {
     if (sizeSelection !== null) {
-      const textualAmount = searchValue(wingsAmounts, sizeSelection);
+      
+      // 
+      const optionSelected = wingsAmounts.filter(
+        (el) => el.id === sizeSelection
+      );
+
+      setPrice(optionSelected[0].price)
+
+      const textualAmount = optionSelected[0].label;
       const sauces: string[] = [];
 
-      setTextualOrder(textualAmount);
+      setTextualOrder(optionSelected[0].label);
+      setPrice(optionSelected[0].price);
+      console.log(price)
 
       if (isSelectedSpicy) {
         sauces.push('Picante');
@@ -198,14 +212,13 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
   };
 
   return (
-    <div className='space-y-2'>
-      {/* Sección: Tamaño de Alitas */}
-      <div
-      // className='bg-gradient-to-r from-orange-50 to-red-50 p-4 rounded-lg border border-orange-200'
+    <div className='space-y-4'>
+      <div 
+        className=' p-2 rounded-lg border border-orange-200'
       >
-        {/* <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
+        <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
           🍗 Cantidad
-        </h3> */}
+        </h3>
         <ToggleButtonGroup
           value={sizeSelection}
           exclusive
@@ -233,84 +246,80 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
         </ToggleButtonGroup>
       </div>
 
-      {/* Sección: Salsas y Papas en grid de 2 columnas */}
-      <div className='grid grid-cols-2 md:grid-cols-2 gap-2'>
-        {/* Sección: Salsas */}
-        <div className='bg-gradient-to-r from-yellow-50 to-orange-50 p-2 rounded-lg border border-yellow-200'>
-          <h3 className=' font-bold text-orange-800 mb-3 flex items-center gap-2'>
-            🌶️ Salsas
-          </h3>
-          <div className='flex flex-wrap gap-3'>
-            {saucesData.map((element, index) => {
-              return (
-                <Checkbox
-                  isDisabled={sizeSelection === null}
-                  isSelected={element.stateSelected}
-                  onValueChange={element.onChangeMethod}
-                  // color='danger'
-                >
-                  <span className='font-medium'>
-                    {element.icon} {element.label}
+      {sizeSelection?<div className='p-2 rounded-lg border border-yellow-200'>
+        <h3 className=' font-bold text-orange-800 mb-3 flex items-center gap-2'>
+          🌶️ Salsas
+        </h3>
+        <div className='flex flex-col items-center justify-center gap-3'>
+          {saucesData.map((element, index) => {
+            return (
+              <Checkbox
+                isDisabled={sizeSelection === null}
+                isSelected={element.stateSelected}
+                onValueChange={element.onChangeMethod}
+                color='danger'
+              >
+                <span className='text-xl'>
+                  {element.icon} {element.label}
+                </span>
+              </Checkbox>
+            );
+          })}
+        </div>
+      </div>:<></>}
+
+
+      <div className='p-2 rounded-lg border border-yellow-300'
+      >
+        <h3 className='font-bold text-yellow-800 mb-3 flex items-center gap-2'>
+          🍟 Papas fritas
+        </h3>
+        <ToggleButtonGroup
+          value={friesSize}
+          // orientation='vertical'
+          size='small'
+          exclusive
+          onChange={handleFriesSelection}
+          aria-label='fries size'
+          className='w-full'
+        >
+          {frenchFries.map((element, index) => {
+            return (
+              <ToggleButton
+                key={index}
+                value={element.id}
+                // aria-label='papas medianas'
+                className='flex-1'
+                disabled={sizeSelection === null}
+              >
+                <div className='flex flex-col items-center py-1'>
+                  <span className='font-semibold'>{element.label}</span>
+                  <span className='text-xs text-gray-600'>
+                    Bs. {element.price}
                   </span>
-                </Checkbox>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Sección: Papas Fritas */}
-        <div className='bg-gradient-to-r from-yellow-100 to-yellow-50 p-2 rounded-lg border border-yellow-300'>
-          <h3 className='font-bold text-yellow-800 mb-3 flex items-center gap-2'>
-            🍟 (+) Papas
-          </h3>
-          <ToggleButtonGroup
-            value={friesSize}
-            orientation='vertical'
-            size='small'
-            exclusive
-            onChange={handleFriesSelection}
-            aria-label='fries size'
-            className='w-full'
-          >
-            {frenchFries.map((element, index) => {
-              return (
-                <ToggleButton
-                  key={index}
-                  value={element.id}
-                  // aria-label='papas medianas'
-                  className='flex-1'
-                  disabled={sizeSelection === null}
-                >
-                  <div className='flex flex-col items-center py-1'>
-                    <span className='font-semibold'>{element.label}</span>
-                    <span className='text-xs text-gray-600'>
-                      + Bs. {element.price}
-                    </span>
-                  </div>
-                </ToggleButton>
-              );
-            })}
-          </ToggleButtonGroup>
-        </div>
+                </div>
+              </ToggleButton>
+            );
+          })}
+        </ToggleButtonGroup>
       </div>
-
-      {/* Vista Previa del Pedido */}
+      
       {textualOrder && (
-        <div className='bg-blue-50 p-4 rounded-lg border border-blue-200'>
+        <div className='bg-blue-50 p-2 rounded-lg border border-blue-200'>
           <h4 className='text-sm font-semibold text-blue-800 mb-2'>
             Vista Previa:
           </h4>
           <p className='text-blue-900 font-medium'>{textualOrder}</p>
           <p className='text-blue-700 text-sm mt-1'>
-            Precio Total: Bs.{' '}
-            {(
+            Precio Total: Bs.{price}
+            {/* {(
               (sizeSelection === '10-wings'
                 ? 30
                 : sizeSelection === '15-wings'
                 ? 45
                 : 60) +
               (friesSize === 'medium' ? 10 : friesSize === 'large' ? 15 : 0)
-            ).toFixed(2)}
+            ).toFixed(2)} */}
           </p>
         </div>
       )}
@@ -321,7 +330,7 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
           isDisabled={sizeSelection === null}
           color='secondary'
           onPress={buildChickenWingsOrderItem}
-          size='lg'
+          size='sm'
           className='font-bold'
         >
           Agregar al Pedido
