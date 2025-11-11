@@ -312,14 +312,7 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
           <p className='text-blue-900 font-medium'>{textualOrder}</p>
           <p className='text-blue-700 text-sm mt-1'>
             Precio Total: Bs.{price}
-            {/* {(
-              (sizeSelection === '10-wings'
-                ? 30
-                : sizeSelection === '15-wings'
-                ? 45
-                : 60) +
-              (friesSize === 'medium' ? 10 : friesSize === 'large' ? 15 : 0)
-            ).toFixed(2)} */}
+            
           </p>
         </div>
       )}
