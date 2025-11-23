@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     } else {
       return NextResponse.json({ error: 'Invalid Credentials' }, { status: 401 });
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json({ error: 'Something went wrong.' }, { status: 500 });
   }
 }

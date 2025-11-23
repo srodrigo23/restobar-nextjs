@@ -80,7 +80,7 @@ export default function Page() {
           timeout: 500,
         });
       }
-    } catch (error) {
+    } catch (error: unknown) {
       addToast({
         title: 'Error de conexión',
         description: 'No se pudo conectar al servidor',
@@ -88,7 +88,7 @@ export default function Page() {
         color: 'danger',
         timeout: 500,
       });
-      console.error('Login error:', error);
+      // console.error('Login error:', error);
     }
   };
 

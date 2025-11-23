@@ -3,13 +3,13 @@
 import ProductsComp from '@/componests/waiter/productsComp';
 import OrderDrawer from '@/componests/waiter/orderDrawer';
 import { OrderProvider, useOrder } from '@/context/OrderContext';
-import { Button, Badge } from '@heroui/react';
+// import { Button, Badge } from '@heroui/react';
 import { useState } from 'react';
 
 const WaiterPageContent = () => {
   const { 
     clearOrder, 
-    orderItems, 
+    // orderItems, 
     // getTotalPrice 
   } = useOrder();
 
@@ -25,7 +25,7 @@ const WaiterPageContent = () => {
     // Aquí podrías enviar el pedido al backend
   };
 
-  const totalItems = orderItems.reduce((sum, item) => sum + item.quantity, 0);
+  // const totalItems = orderItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <>

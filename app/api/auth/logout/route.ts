@@ -14,7 +14,7 @@ export async function POST() {
     });
 
     return response;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json({ error: 'Something went wrong.' }, { status: 500 });
   }
 }
