@@ -1,12 +1,20 @@
 'use client';
 
 import { Navbar, NavbarContent, NavbarItem, Button } from '@heroui/react';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+// import { usePathname } from 'next/navigation';
+// import Link from 'next/link';
 
-import { Badge } from '@heroui/react';
+// import { Badge } from '@heroui/react';
 
-import { User, Dropdown, DropdownTrigger, Avatar, DropdownMenu, DropdownItem } from '@heroui/react';
+import {
+  // User,
+  Dropdown,
+  DropdownTrigger,
+  Avatar,
+  DropdownMenu,
+  DropdownItem,
+} from '@heroui/react';
+import { useRouter } from 'next/navigation';
 
 interface NavbarProps {
   // pathname:string
@@ -14,7 +22,8 @@ interface NavbarProps {
 }
 
 const NavbarComp: React.FC<NavbarProps> = ({ label }) => {
-  const pathname = usePathname();
+  // const pathname = usePathname();
+  const router = useRouter()
 
   return (
     <Navbar
@@ -53,10 +62,13 @@ const NavbarComp: React.FC<NavbarProps> = ({ label }) => {
             <DropdownItem key='system'>System</DropdownItem>
             <DropdownItem key='configurations'>Configurations</DropdownItem>
             <DropdownItem key='help_and_feedback'>Help & Feedback</DropdownItem> */}
-            <DropdownItem key='logout' color='danger'>
+            <DropdownItem
+              key='logout'
+              color='danger'
+              onClick={() => router.push('/login')}
+            >
               Cerrar Sesión
             </DropdownItem>
-
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
@@ -86,4 +98,3 @@ const NavbarComp: React.FC<NavbarProps> = ({ label }) => {
 };
 
 export default NavbarComp;
- 

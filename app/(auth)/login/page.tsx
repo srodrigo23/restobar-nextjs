@@ -8,6 +8,8 @@ import { Input } from '@heroui/react';
 
 import z from 'zod';
 
+import { useRouter } from 'next/navigation';
+
 // type Inputs = {
 //   username : string
 //   password : string
@@ -35,6 +37,8 @@ const loginFormShema = z.object({
 type LoginFormType = z.infer<typeof loginFormShema>;
 
 export default function Page() {
+
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -48,7 +52,25 @@ export default function Page() {
     },
   });
 
-  const onSubmit: SubmitHandler<LoginFormType> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<LoginFormType> = async (data) => {
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        router.push('/waiter');
+      } else {
+        console.error('Login failed:', result.error);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
 
   const inputAlert = 'text-xs text-red-400';
 
