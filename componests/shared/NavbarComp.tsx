@@ -25,6 +25,24 @@ const NavbarComp: React.FC<NavbarProps> = ({ label }) => {
   // const pathname = usePathname();
   const router = useRouter()
 
+  const logout = async ()=>{
+    
+    try {
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify(data),
+      });
+      // const result = await response.json();
+      if (response.ok) {
+        router.push('/login');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+    
+  }
+
   return (
     <Navbar
       position='static'
@@ -65,7 +83,7 @@ const NavbarComp: React.FC<NavbarProps> = ({ label }) => {
             <DropdownItem
               key='logout'
               color='danger'
-              onClick={() => router.push('/login')}
+              onClick={logout}
             >
               Cerrar Sesión
             </DropdownItem>
