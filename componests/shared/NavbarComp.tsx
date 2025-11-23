@@ -1,6 +1,7 @@
 'use client';
 
-import { Navbar, NavbarContent, NavbarItem, Button } from '@heroui/react';
+import { Navbar, NavbarContent, NavbarItem } from '@heroui/react';
+import { addToast } from '@heroui/react';
 // import { usePathname } from 'next/navigation';
 // import Link from 'next/link';
 
@@ -35,6 +36,13 @@ const NavbarComp: React.FC<NavbarProps> = ({ label }) => {
       });
       // const result = await response.json();
       if (response.ok) {
+        addToast({
+          title: 'Logout exitoso',
+          description: 'Cerrando Sesion',
+          variant: 'flat',
+          color: 'success',
+          timeout: 1000,
+        });
         router.push('/login');
       }
     } catch (error) {

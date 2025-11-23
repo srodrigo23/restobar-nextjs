@@ -1,14 +1,13 @@
 'use client';
 
-import { Button } from '@heroui/react';
+import { Button, Input, addToast} from '@heroui/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { Input } from '@heroui/react';
 
 import z from 'zod';
 
 import { useRouter } from 'next/navigation';
+// import { useState } from 'react';
 
 // type Inputs = {
 //   username : string
@@ -52,6 +51,7 @@ export default function Page() {
     },
   });
 
+
   const onSubmit: SubmitHandler<LoginFormType> = async (data) => {
     try {
       const response = await fetch('/api/auth/login', {
@@ -63,11 +63,31 @@ export default function Page() {
       const result = await response.json();
 
       if (response.ok) {
+        addToast({
+          title: 'Login exitoso',
+          description: 'Bienvenido al sistema',
+          variant: 'flat',
+          color: 'success',
+          timeout:1000
+        });
         router.push('/waiter');
       } else {
-        console.error('Login failed:', result.error);
+        addToast({
+          title: 'Error de login',
+          description: result.error || 'Credenciales inválidas',
+          variant: 'flat',
+          color: 'danger',
+          timeout: 500,
+        });
       }
     } catch (error) {
+      addToast({
+        title: 'Error de conexión',
+        description: 'No se pudo conectar al servidor',
+        variant: 'flat',
+        color: 'danger',
+        timeout: 500,
+      });
       console.error('Login error:', error);
     }
   };
@@ -110,15 +130,14 @@ export default function Page() {
         {errors.password && (
           <span className={inputAlert}>{errors.password.message}</span>
         )}
-        
-        <Button 
-					className='cursor-pointer mt-5' 
-					color='primary' 
-					type='submit'
-				>
+
+        <Button
+          className='cursor-pointer mt-5'
+          color='primary'
+          type='submit'
+        >
           INICIAR SESION
         </Button>
-        
       </form>
     </div>
   );
