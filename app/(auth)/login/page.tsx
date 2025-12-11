@@ -71,6 +71,11 @@ export default function Page() {
           timeout:1000
         });
         router.push('/waiter');
+
+
+
+
+        
       } else {
         addToast({
           title: 'Error de login',
