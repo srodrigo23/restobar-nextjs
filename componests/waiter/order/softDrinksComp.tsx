@@ -108,41 +108,51 @@ export const SoftDriknsComp: React.FC<SoftDriknsCompProps> = () => {
 
   return (
     <div className='space-y-6'>
-      <div className='bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-lg border border-red-200'>
-        <h3 className='text-lg font-bold text-red-800 mb-3 flex items-center gap-2'>
-          🥤 Gaseosas
-        </h3>
+      {/* bg-gradient-to-r from-red-50 to-orange-50 */}
+      <div className='p-2'>
+        <div className='flex gap-2 items-center'>
+          <h3 className='text-lg font-bold text-red-800 mb-3 flex items-center gap-2'>
+            🥤 Gaseosas
+          </h3>
+          <span className='text-sm text-gray-600'>(2 ltrs.)</span>
+        </div>
+
         <RadioGroup value={selectedJuice} onValueChange={setSelectedJuice}>
-          <div className='flex gap-4 justify-center'>
+          <div className='flex flex-col gap-4 justify-center rounded-lg border border-red-200 p-3'>
             {sodas.map((soda) => (
               <Radio key={soda.id} value={soda.id} className='p-2'>
-                <div className='flex flex-col justify-between items-center w-full'>
+                <div className='flex justify-between items-center w-full gap-3'>
                   <span className='text-xl'>
                     {soda.icon} {soda.label}
                   </span>
-                  <span className='text-sm text-gray-600'>({soda.size})</span>
+                  <span className='text-sm text-gray-600'>
+                    Bs.- {soda.price}
+                  </span>
                 </div>
               </Radio>
             ))}
           </div>
         </RadioGroup>
       </div>
-
-      <div className='bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-lg border border-red-200'>
-        <h3 className='text-lg font-bold text-red-800 mb-3 flex items-center gap-2'>
-          🥤 Jugos
-        </h3>
-        <div className='flex flex-col gap-3'>
+      {/* bg-gradient-to-r from-red-50 to-orange-50 */}
+      <div className='p-2'>
+        <div className='flex gap-2 items-center'>
+          <h3 className='text-lg font-bold text-red-800 mb-3 flex items-center gap-2'>
+            🥤 Jugos
+          </h3>
+          <span className='text-sm text-gray-600'>(1 ltrs.)</span>
+        </div>
+        <div className='flex flex-col gap-3 rounded-lg border border-red-200 p-3'>
           <RadioGroup value={selectedJuice} onValueChange={setSelectedJuice}>
-            <div className='flex gap-4 justify-center'>
+            <div className='flex flex-col gap-4 justify-center'>
               {juices.map((juice) => (
                 <Radio key={juice.id} value={juice.id} className='p-2'>
-                  <div className='flex flex-col justify-between items-center w-full'>
+                  <div className='flex justify-between items-center w-full gap-4'>
                     <span className='text-xl'>
                       {juice.icon} {juice.label}
                     </span>
                     <span className='text-sm text-gray-600'>
-                      ({juice.size})
+                      Bs.- {juice.price}
                     </span>
                   </div>
                 </Radio>
@@ -182,7 +192,6 @@ export const SoftDriknsComp: React.FC<SoftDriknsCompProps> = () => {
           </div>
         </div>
       </div>
-
       {/* Vista Previa */}
       {selectedSoda && (
         <div className='bg-blue-50 p-4 rounded-lg border border-blue-200'>
@@ -195,14 +204,13 @@ export const SoftDriknsComp: React.FC<SoftDriknsCompProps> = () => {
           <p className='text-blue-700 text-sm mt-1'>Precio: Bs. 10.00</p>
         </div>
       )}
-
       <div className='flex justify-end'>
         <Button
           isDisabled={!selectedSoda}
           color='secondary'
           onPress={addSodaToOrder}
-          size='sm'
-          className='font-bold'
+          size='lg'
+          className='w-full font-bold'
         >
           Agregar al Pedido
         </Button>

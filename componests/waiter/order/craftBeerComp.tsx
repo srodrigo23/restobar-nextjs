@@ -214,13 +214,13 @@ export const CraftBeerComp: React.FC<CraftBeerCompProps> = () => {
       )}
 
       {/* Botón Agregar */}
-      <div className='flex justify-end'>
+      <div className='flex justify-end mt-6'>
         <Button
           isDisabled={!isValid}
           color='secondary'
           onPress={addBeerToOrder}
-          size='md'
-          className='font-bold'
+          size='lg'
+          className='w-full font-bold'
         >
           Agregar al Pedido
         </Button>

@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
 
 import { useRouter } from 'next/navigation';
-// import { useState } from 'react';
+
 
 // type Inputs = {
 //   username : string
@@ -53,6 +53,7 @@ export default function Page() {
 
 
   const onSubmit: SubmitHandler<LoginFormType> = async (data) => {
+    
     try {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
@@ -72,10 +73,6 @@ export default function Page() {
         });
         router.push('/waiter');
 
-
-
-
-        
       } else {
         addToast({
           title: 'Error de login',

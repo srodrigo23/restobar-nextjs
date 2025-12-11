@@ -213,9 +213,8 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
 
   return (
     <div className='space-y-4'>
-      <div 
-        className=' p-2 rounded-lg border border-orange-200'
-      >
+      {/* border border-orange-200 */}
+      <div className=' p-2 rounded-lg'>
         <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
           🍗 Cantidad
         </h3>
@@ -246,31 +245,35 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
         </ToggleButtonGroup>
       </div>
 
-      {sizeSelection?<div className='p-2 rounded-lg border border-yellow-200'>
-        <h3 className=' font-bold text-orange-800 mb-3 flex items-center gap-2'>
-          🌶️ Salsas
-        </h3>
-        <div className='flex flex-col items-center justify-center gap-3'>
-          {saucesData.map((element, index) => {
-            return (
-              <Checkbox
-                isDisabled={sizeSelection === null}
-                isSelected={element.stateSelected}
-                onValueChange={element.onChangeMethod}
-                color='danger'
-              >
-                <span className='text-xl'>
-                  {element.icon} {element.label}
-                </span>
-              </Checkbox>
-            );
-          })}
+      {/* border border-yellow-200 */}
+      {sizeSelection ? (
+        <div className='p-2'>
+          <h3 className=' font-bold text-orange-800 mb-3 flex items-center gap-2'>
+            🌶️ Salsas
+          </h3>
+          <div className='flex flex-col  justify-center gap-3 border border-yellow-200 p-3 rounded-lg'>
+            {saucesData.map((element, index) => {
+              return (
+                <Checkbox
+                  isDisabled={sizeSelection === null}
+                  isSelected={element.stateSelected}
+                  onValueChange={element.onChangeMethod}
+                  color='danger'
+                >
+                  <span className='text-xl'>
+                    {element.icon} {element.label}
+                  </span>
+                </Checkbox>
+              );
+            })}
+          </div>
         </div>
-      </div>:<></>}
+      ) : (
+        <></>
+      )}
 
-
-      <div className='p-2 rounded-lg border border-yellow-300'
-      >
+      {/* border border-yellow-300 */}
+      <div className='p-2 rounded-lg'>
         <h3 className='font-bold text-yellow-800 mb-3 flex items-center gap-2'>
           🍟 Papas fritas
         </h3>
@@ -303,17 +306,14 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
           })}
         </ToggleButtonGroup>
       </div>
-      
+
       {textualOrder && (
-        <div className='bg-blue-50 p-2 rounded-lg border border-blue-200'>
+        <div className='bg-blue-50 p-4 rounded-lg border border-blue-200'>
           <h4 className='text-sm font-semibold text-blue-800 mb-2'>
             Vista Previa:
           </h4>
           <p className='text-blue-900 font-medium'>{textualOrder}</p>
-          <p className='text-blue-700 text-sm mt-1'>
-            Precio Total: Bs.{price}
-            
-          </p>
+          <p className='text-blue-700 text-sm mt-1'>Precio Total: Bs.{price}</p>
         </div>
       )}
 
@@ -323,8 +323,8 @@ export const ChickenWingsComp: React.FC<ChickenWingsCompProps> = () => {
           isDisabled={sizeSelection === null}
           color='secondary'
           onPress={buildChickenWingsOrderItem}
-          size='sm'
-          className='font-bold'
+          size='lg'
+          className='w-full font-bold'
         >
           Agregar al Pedido
         </Button>

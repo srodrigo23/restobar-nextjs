@@ -59,8 +59,9 @@ export const DrinksComp: React.FC<DrinksCompProps> = () => {
   };
 
   return (
-    <div className='space-y-6'>
-      <div className='bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200'>
+    <div className='space-y-2'>
+      {/* bg-gradient-to-r from-orange-50 to-yellow-50 */}
+      <div className='p-4'>
         <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
           Botellas
         </h3>
@@ -68,7 +69,7 @@ export const DrinksComp: React.FC<DrinksCompProps> = () => {
           value={bottleDrinkSelected}
           onValueChange={setBottleDrinkSelected}
         >
-          <div className='flex flex-col gap-3'>
+          <div className='flex flex-col gap-3 rounded-lg border border-orange-200 p-3'>
             {bottleDrinks.map((bottleDrink) => (
               <Radio
                 key={bottleDrink.id}
@@ -86,8 +87,8 @@ export const DrinksComp: React.FC<DrinksCompProps> = () => {
           </div>
         </RadioGroup>
       </div>
-
-      <div className='bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200'>
+      {/* bg-gradient-to-r from-orange-50 to-yellow-50 */}
+      <div className=' p-4'>
         <h3 className='text-lg font-bold text-orange-800 mb-3 flex items-center gap-2'>
           Jarras Preparadas
         </h3>
@@ -95,7 +96,7 @@ export const DrinksComp: React.FC<DrinksCompProps> = () => {
           value={bottleDrinkSelected}
           onValueChange={setBottleDrinkSelected}
         >
-          <div className='flex flex-col gap-3'>
+          <div className='flex flex-col gap-3 rounded-lg border border-orange-200 p-3'>
             {jars.map((jar) => (
               <Radio key={jar.id} value={jar.id} className='p-2'>
                 <div className='flex items-center w-full gap-1.5'>
